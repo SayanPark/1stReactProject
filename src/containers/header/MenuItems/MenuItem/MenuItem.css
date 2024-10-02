@@ -1,0 +1,34 @@
+.MenuItem{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    box-sizing: border-box
+}
+.MenuItem a{
+    color: #5c5b5b;
+    text-decoration: none;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: block;
+}
+.MenuItem a:hover,
+.MenuItem a:active,
+.MenuItem a.active{
+    cursor: pointer;
+    color: rgb(55, 206, 25);
+}
+ @media(max-width:499px){
+    .MenuItem{
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px 0;
+
+    }
+   .MenuItem a{
+        width: 100%;
+        padding-right: 0;
+    }
+}

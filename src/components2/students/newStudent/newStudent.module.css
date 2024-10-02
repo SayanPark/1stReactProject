@@ -1,0 +1,24 @@
+.newStudent{
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    text-align: center;
+    margin-top: 75px;
+}
+.newStudent label{
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    font-weight: bold;
+}
+.newStudent input{
+    width:90%;
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+    margin: auto;
+}
