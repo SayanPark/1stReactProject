@@ -11,7 +11,7 @@ const EditStudent = () => {
     // Extract data from location.state (with fallback to default values)    
     const { student_id, student_name, student_class, student_phone_number, student_email } = location.state || {};
     // Set initial state with data from location.state if available    
-    const [id, setStudentId] = useState(student_id || '');
+    const [id] = useState(student_id || '');
     const [name, setName] = useState(student_name || '');
     const [classNumber, setClassNumber] = useState(student_class || '');
     const [phoneNumber, setPhoneNumber] = useState(student_phone_number || '');
