@@ -79,7 +79,7 @@ const HomePage =(props)=>{
           .catch(error => {
             console.error('Error fetching data:', error);
           });
-      };
+    };
 
       // const nameChanged = (event, id) => {
       //   console.log(`Name changed for student ${id}`);
