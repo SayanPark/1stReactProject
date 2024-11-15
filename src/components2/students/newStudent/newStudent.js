@@ -24,15 +24,16 @@ const NewStudent = (props) => {
             <input type="number" value={studentPhoneNumber} onChange={studentPhoneNumberHandler} />
             <label>ایمیل</label>
             <input type="email" value={studentEmail} onChange={studentEmailHandler} />
-            <Button clicked={() => navigate('/')} btnType="danger">اضافه کردن</Button>
+            <Button clicked={props.clicked} btnType="danger">اضافه کردن</Button>
         </React.Fragment>
     )
 }
 
 export default React.memo(WithClass(NewStudent, classes.newStudent));
+
 NewStudent.propTypes = {
     studentName: PropTypes.string.isRequired,
-    studentClass: PropTypes.number.isRequired,
-    studentPhoneNumber: PropTypes.number.isRequired,
+    studentClass: PropTypes.string.isRequired, // Change to string if handling input as string
+    studentPhoneNumber: PropTypes.string.isRequired, // Change to string
     studentEmail: PropTypes.string.isRequired,
 }
