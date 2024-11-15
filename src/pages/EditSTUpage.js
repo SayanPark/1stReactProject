@@ -19,38 +19,42 @@ const EditStudent = () => {
     const [message, setMessage] = useState('');
      useEffect(() => {
         if (!auth) { navigate('/');} }, [auth, navigate]);
-     const editStudent = () => {fetch('http://localhost:8080/student/updateStudent.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-        student_id: id,
-        student_name: name,
-        student_class: classNumber,
-        student_phone_number: phoneNumber,
-        student_email: email
-    }),
- }).then((response) => {
-    if (!response.ok) {
-        throw new Error(response.statusText); }
-        return response.text();})
-        .then((responseText) => {
-            if (responseText.startsWith('<')) {
-                setMessage('Error: Server returned an error page');
-            } else {
-                try {
-                    const responseJson = JSON.parse(responseText);
-                    if (responseJson === 'successfull') {
-                        navigate('/');
-                    } else {
-                        setMessage(`Error: ${responseJson}`);
+     const editStudent = () => {
+        fetch('http://localhost:8080/student/updateStudent.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                student_id: id,
+                student_name: name,
+                student_class: classNumber,
+                student_phone_number: phoneNumber,
+                student_email: email
+                }
+            ),
+        }
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.statusText); }
+            return response.text();})
+            .then((responseText) => {
+                if (responseText.startsWith('<')) {
+                    setMessage('Error: Server returned an error page');
+                } else {
+                    try {
+                        const responseJson = JSON.parse(responseText);
+                        if (responseJson === 'successfull') {
+                            navigate('/');
+                        } else {
+                            setMessage(`Error: ${responseJson}`);
+                        }
+                    } catch (error) {
+                        setMessage('Error: Unable to parse response as JSON');
                     }
-                } catch (error) {
-                    setMessage('Error: Unable to parse response as JSON');
-                 }
-                }}).catch((error) => {
-                    setMessage(`Error: ${error.message}`);
-                });
-            };
+                    }}).catch((error) => {
+                        setMessage(`Error: ${error.message}`);
+                    });
+                };
 return (
     <div className="NewPost">
         <h1>ویرایش دانش آموز</h1>

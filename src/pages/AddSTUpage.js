@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect} from 'react';
 import NewStudent from '../components2/students/newStudent/newStudent';
 import useAuth from './useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +10,10 @@ const AddStudent = (props) => {
     useEffect(() => {if (!auth) {navigate('/');}}, [auth, navigate]);
 
     const [studentName, setStudentName] = useState('');
-    const [studentClass, setStudentClass] = useState(0);
-    const [studentPhoneNumber, setStudentPhoneNumber] = useState(0);
+    const [studentClass, setStudentClass] = useState('');
+    const [studentPhoneNumber, setStudentPhoneNumber] = useState('');
     const [studentEmail, setStudentEmail] = useState('');
-    const [error, setError]  = useState(false);
+    const [setError]  = useState(false);
 
     const studentNameHandler = (event) => setStudentName(event.target.value);
     const studentClassHandler = (event) => setStudentClass(event.target.value);
@@ -21,34 +21,43 @@ const AddStudent = (props) => {
     const studentEmailHandler = (event) => setStudentEmail(event.target.value);
 
     const addStudent=()=>{
-        fetch('http://localhost:8080/student/insertStudent.php',{
-          method:'POST',
-          headers:{
-              'Accept' : 'applicaion/json',
-              'Content-Type':'application/json',
-          },
-          body:JSON.stringify({
-              student_name:studentName,
-              studet_class:studentClass,
-              student_phone_number:studentPhoneNumber,
-              student_email:studentEmail
-          })
-      }).then((response)=>response.json())
-          .then((responseJson)=>{
-           
-              props.history.replace('/');
-          }).catch((error)=>{
-            setError(error)
-          })
-      }
-        let ErrorMessage=null;
-        if(error){
-          ErrorMessage = <h1 style={{textAlign:'center',color:'red'}}>متاسفانه عملیات شما با شکست روبرو شد.لطفا مجددا تلاش کنید</h1>
+        fetch('http://localhost:8080/student/insertStudent.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                student_name: studentName,
+                student_class: studentClass,
+                student_phone_number: studentPhoneNumber,
+                student_email: studentEmail
+                }
+            ),
         }
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.statusText); }
+            return response.text();})
+            .then((responseText) => {
+                if (responseText.startsWith('<')) {
+                    setError('Error: Server returned an error page');
+                } else {
+                    try {
+                        const responseJson = JSON.parse(responseText);
+                        if (responseJson === 'successfull') {
+                            navigate('/');
+                        } else {
+                            setError(`Error: ${responseJson}`);
+                        }
+                    } catch (error) {
+                        setError('Error: Unable to parse response as JSON');
+                    }
+                    }}).catch((error) => {
+                        setError(`Error: ${error.message}`);
+                    });
+                };
 
     return (
         <React.Fragment>
-           {ErrorMessage}
             <NewStudent
                 studentName={studentName}
                 studentClass={studentClass}
